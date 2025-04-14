@@ -1,0 +1,9 @@
+name: "Run Tests"
+description: "Run linting and tests"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Lint
+      run: pnpm lint
+      shell: bash

@@ -1,0 +1,31 @@
+name: CI/CD Pipeline
+on:
+  pull_request:
+    branches: [test, uat, prod, main]
+  push:
+    branches: [test, uat, prod, main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target deployment environment"
+        required: true
+        default: "test"
+        type: choice
+        options:
+          - test
+          - uat
+          - prod
+
+jobs:
+  # ✅ Job: Validace pro PR
+  validate:
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/validate.yaml
+
+  # 🚀 Job: Deploy při push (merge) do test/uat/prod (ne main) nebo manuálně
+  deploy:
+    if: (github.event_name == 'push' && github.ref_name != 'main') || github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/deploy.yaml
+    with:
+      environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.ref_name }}
+    secrets: inherit
