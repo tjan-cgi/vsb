@@ -77,9 +77,6 @@ export const App = () => {
             <p className="text-center w-full">
               Aplikace byla úspěšně aktualizována.
             </p>
-            <p className="text-center w-full">
-              {import.meta.env.VITE_BUILD_FOR}
-            </p>
           </CardFooter>
         </Card>
 
