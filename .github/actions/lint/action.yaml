@@ -7,3 +7,6 @@ runs:
     - name: Lint
       run: pnpm lint
       shell: bash
+    - name: Test
+      run: pnpm test
+      shell: bash
